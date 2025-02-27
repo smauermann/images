@@ -38,6 +38,6 @@ jobs:
         with:
           context: actions-runner
           push: true
-          tags: 2.322.0
+          tags: ghcr.io/smauermann/actions-runner:2.322.0
           cache-from: type=gha
           cache-to: type=gha,mode=max
