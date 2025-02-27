@@ -32,5 +32,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build the Docker image
-        run: docker build . --file actions-runner/Dockerfile --tag my-image-name:$(date +%s)
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: actions-runner
+          push: true
+          tags: 2.322.0
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
