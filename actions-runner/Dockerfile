@@ -1,6 +1,9 @@
 ARG RUNNER_VERSION=2.322.0
-ARG ARGOCD_VERSION=v2.14.2
-ARG HELM_VERSION=v3.17.1
+ARG ARGOCD_VERSION=2.14.2
+ARG HELM_VERSION=3.17.1
+
+FROM --platform=amd64 bitnami/argo-cd:${ARGOCD_VERSION} AS argocd
+FROM --platform=amd64 alpine/helm:${HELM_VERSION} AS helm
 
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
@@ -27,8 +30,8 @@ RUN \
     && chmod +x /usr/local/bin/yq \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=bitnami/argo-cd:latest /opt/bitnami/argo-cd/bin/argocd /usr/local/bin/argocd
-COPY --from=alpine/helm:latest /usr/bin/helm /usr/local/bin/helm
+COPY --from=argocd /opt/bitnami/argo-cd/bin/argocd /usr/local/bin/argocd
+COPY --from=helm /usr/bin/helm /usr/local/bin/helm
 
 USER runner
 
