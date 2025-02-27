@@ -1,5 +1,6 @@
-ARG VERSION
-FROM --platform=amd64 ghcr.io/actions/actions-runner:2.322.0
+ARG RUNNER_VERSION=2.322.0
+ARG ARGOCD_VERSION=v2.14.2
+FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
@@ -22,7 +23,9 @@ RUN \
         zstd \
     && curl -fsSL -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
+    && chmod +x /usr/local/bin/argocd
 
 USER runner
 
