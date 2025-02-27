@@ -40,7 +40,7 @@ jobs:
 
       - name: Build and push "action-runner"
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: images/actions-runner
           push: ${{ github.event_name != 'pull_request' }}
