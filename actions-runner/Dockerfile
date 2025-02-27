@@ -1,5 +1,6 @@
 ARG RUNNER_VERSION=2.322.0
 ARG ARGOCD_VERSION=v2.14.2
+ARG HELM_VERSION=v3.17.1
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
@@ -23,9 +24,11 @@ RUN \
         zstd \
     && curl -fsSL -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq \
+    && curl -fsSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
+    && chmod +x /usr/local/bin/argocd \
+    && curl -fsSL https://github.com/helm/helm/releases/download/${HELM_VERSION}/helm-${HELM_VERSION}-linux-amd64.tar.gz \
+    && tar -zxvf helm-${HELM_VERSION}-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm  \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
-    && chmod +x /usr/local/bin/argocd
 
 USER runner
 
