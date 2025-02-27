@@ -1,5 +1,5 @@
 ARG VERSION
-FROM --platform=amd64 ghcr.io/actions/actions-runner:${VERSION}
+FROM --platform=amd64 ghcr.io/actions/actions-runner:2.322.0
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
