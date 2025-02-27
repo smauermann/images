@@ -1,9 +1,11 @@
 ARG RUNNER_VERSION=2.322.0
 ARG ARGOCD_VERSION=2.14.2
 ARG HELM_VERSION=3.17.1
+ARG KUSTOMIZE_VERSION=v5.0.1
 
 FROM --platform=amd64 bitnami/argo-cd:${ARGOCD_VERSION} AS argocd
 FROM --platform=amd64 alpine/helm:${HELM_VERSION} AS helm
+FROM --platform=amd64 registry.k8s.io/kustomize/kustomize:${KUSTOMIZE_VERSION} AS kustomize
 
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
@@ -32,6 +34,7 @@ RUN \
 
 COPY --from=argocd /opt/bitnami/argo-cd/bin/argocd /usr/local/bin/argocd
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
+COPY --from=kustomize /app/kustomize /usr/local/bin/kustomize
 
 USER runner
 
