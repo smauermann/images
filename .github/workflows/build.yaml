@@ -44,40 +44,37 @@ jobs:
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          # Extract unique directories and format as JSON array
-          DIRS_JSON=$(echo "$ALL_CHANGED_FILES" | xargs -n1 dirname | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
-          echo "matrix={\"image\":$DIRS_JSON}" >> $GITHUB_OUTPUT
-          echo "matrix={\"image\":$ALL_CHANGED_FILES}"
+          echo "matrix={\"image\":$ALL_CHANGED_FILES}" >> $GITHUB_OUTPUT
 
-#  build:
-#    runs-on: ubuntu-latest
-#    needs: changed
-#    if: ${{ needs.changed.outputs.any_changed == 'true' }}
-#    strategy:
-#      matrix: ${{ fromJSON(needs.changed.outputs.matrix) }}
-#      max-parallel: 4
-#    permissions:
-#      contents: read
-#      packages: write
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Log into ghcr.io
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ${{ env.REGISTRY }}
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Build and push "action-runner"
-#        id: build-and-push
-#        uses: docker/build-push-action@v6
-#        with:
-#          context: ${{ matrix.image }}
-#          push: ${{ github.event_name != 'pull_request' }}
-#          tags: ghcr.io/smauermann/actions-runner:2.322.0
-#          cache-from: type=gha
-#          cache-to: type=gha,mode=max
+  build:
+    runs-on: ubuntu-latest
+    needs: changed
+    if: ${{ needs.changed.outputs.any_changed == 'true' }}
+    strategy:
+      matrix: ${{ fromJSON(needs.changed.outputs.matrix) }}
+      max-parallel: 4
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push "action-runner"
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.image }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/smauermann/actions-runner:2.322.0
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
