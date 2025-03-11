@@ -18,6 +18,8 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 
 USER root
 
+# test change
+
 RUN \
     apt-get update \
     && \
