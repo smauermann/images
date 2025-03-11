@@ -33,7 +33,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
-          files: kubernetes/**
+          files: images/**
 
       - name: Set up diff matrix
         id: setup-matrix
