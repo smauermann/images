@@ -44,10 +44,10 @@ jobs:
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          echo $ALL_CHANGED_FILES
           # Extract unique directories and format as JSON array
           DIRS_JSON=$(echo "$ALL_CHANGED_FILES" | xargs -n1 dirname | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "matrix={\"image\":$DIRS_JSON}" >> $GITHUB_OUTPUT
+          echo "matrix={\"image\":$ALL_CHANGED_FILES}"
 
 #  build:
 #    runs-on: ubuntu-latest
