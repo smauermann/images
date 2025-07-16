@@ -44,6 +44,6 @@ jobs:
         with:
           context: images/actions-runner
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/smauermann/actions-runner:2.323.0
+          tags: ghcr.io/smauermann/actions-runner:2.326.0
           cache-from: type=gha
           cache-to: type=gha,mode=max
