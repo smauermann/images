@@ -1,5 +1,5 @@
 ARG RUNNER_VERSION=v2.328.0
-ARG ARGOCD_VERSION=3.0.0
+ARG ARGOCD_VERSION=3.0.12
 
 FROM --platform=amd64 bitnami/argo-cd:${ARGOCD_VERSION} AS argocd
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
