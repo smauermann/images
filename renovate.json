@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     "helpers:pinGitHubActionDigests",
-    "github>smauermann/homelab//.renovate/customManagers.json5"
+    "github>smauermann/homelab//.renovate/customManagers.json5",
+    ":disableRateLimiting"
   ]
 }
-
