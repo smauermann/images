@@ -1,9 +1,8 @@
 # renovate: datasource=github-releases depName=actions/runner
 ARG RUNNER_VERSION=2.328.0
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-ARG ARGOCD_VERSION=3.0.12
+ARG ARGOCD_VERSION=v3.0.12
 
-FROM --platform=amd64 bitnami/argo-cd:${ARGOCD_VERSION} AS argocd
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
 ENV DEBCONF_NONINTERACTIVE_SEEN=true \
@@ -22,7 +21,9 @@ RUN \
         zstd \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=argocd /opt/bitnami/argo-cd/bin/argocd /usr/local/bin/argocd
+ARG ARGOCD_VERSION
+RUN curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-amd64 \
+    && chmod +x /usr/local/bin/argocd
 
 USER runner
 
