@@ -1,4 +1,6 @@
+# renovate: datasource=github-releases depName=actions/runner
 ARG RUNNER_VERSION=2.328.0
+# renovate: datasource=github-releases depName=argoproj/argo-cd
 ARG ARGOCD_VERSION=3.0.12
 
 FROM --platform=amd64 bitnami/argo-cd:${ARGOCD_VERSION} AS argocd
@@ -23,3 +25,4 @@ RUN \
 COPY --from=argocd /opt/bitnami/argo-cd/bin/argocd /usr/local/bin/argocd
 
 USER runner
+
