@@ -1,6 +1,6 @@
 FROM cgr.dev/chainguard/wolfi-base:latest
 
-# renovate: datasource=apk depName=unbound repository=https://packages.wolfi.dev/os
+# renovate: datasource=github-releases depName=NLnetLabs/unbound
 ARG UNBOUND_VERSION=1.24.2
 
 RUN apk add --no-cache \
