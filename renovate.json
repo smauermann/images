@@ -3,7 +3,19 @@
   "extends": [
     "config:recommended",
     "helpers:pinGitHubActionDigests",
-    "github>smauermann/homelab//.renovate/customManagers.json5",
     ":disableRateLimiting"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Process annotated dependencies in Dockerfiles",
+      "fileMatch": [
+        "(^|/)Dockerfile[^/]*$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    }
   ]
 }
