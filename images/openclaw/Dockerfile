@@ -5,19 +5,22 @@ FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 
 USER root
 
+# renovate: datasource=github-releases depName=1Password/1password-cli
+ARG OP_CLI_VERSION=v2.34.0
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         chromium \
         ca-certificates \
         fonts-liberation \
         curl \
-        gnupg \
-    && curl -fsSL https://downloads.1password.com/linux/keys/1password.asc \
-        | gpg --dearmor -o /usr/share/keyrings/1password-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" \
-        > /etc/apt/sources.list.d/1password.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends 1password-cli \
+        unzip \
+    && ARCH=$(dpkg --print-architecture) \
+    && curl -fsSL "https://cache.agilebits.com/dist/1P/op2/pkg/${OP_CLI_VERSION}/op_linux_${ARCH}_${OP_CLI_VERSION}.zip" \
+        -o /tmp/op.zip \
+    && unzip /tmp/op.zip op -d /usr/local/bin/ \
+    && chmod +x /usr/local/bin/op \
+    && rm /tmp/op.zip \
     && rm -rf /var/lib/apt/lists/*
 
 USER node
