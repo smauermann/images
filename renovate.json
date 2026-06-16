@@ -5,6 +5,14 @@
     "helpers:pinGitHubActionDigests",
     ":disableRateLimiting"
   ],
+  "packageRules": [
+    {
+      "description": "Automerge non-major updates; only major needs manual approval",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
+      "automerge": true,
+      "platformAutomerge": false
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
