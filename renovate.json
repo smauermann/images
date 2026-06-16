@@ -5,6 +5,7 @@
     "helpers:pinGitHubActionDigests",
     ":disableRateLimiting"
   ],
+  "rebaseWhen": "conflicted",
   "packageRules": [
     {
       "description": "Automerge non-major updates; only major needs manual approval",
