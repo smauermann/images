@@ -8,12 +8,12 @@ on:
       - images/**
       - .github/**
 
+  # No path filter: the "Detect changed images" job is a required status check,
+  # so it must run on every PR (path-filtered workflows never report → merge blocked).
+  # Actual image builds stay gated by the matrix `if` below.
   pull_request:
     branches:
       - main
-    paths:
-      - images/**
-      - .github/**
 
 env:
   REGISTRY: ghcr.io
