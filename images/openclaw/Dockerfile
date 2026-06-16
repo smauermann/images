@@ -6,7 +6,7 @@ FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 USER root
 
 # renovate: datasource=custom.1password-cli depName=1password-cli
-ARG OP_CLI_VERSION=v2.34.0
+ARG OP_CLI_VERSION=v2.34.1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
