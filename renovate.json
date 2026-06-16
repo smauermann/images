@@ -5,12 +5,24 @@
     "helpers:pinGitHubActionDigests",
     ":disableRateLimiting"
   ],
+  "customDatasources": {
+    "1password-cli": {
+      "defaultRegistryUrlTemplate": "https://app-updates.agilebits.com/product_history/CLI2",
+      "format": "html"
+    }
+  },
   "packageRules": [
     {
       "description": "Automerge non-major updates; only major needs manual approval",
       "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
       "automerge": true,
       "platformAutomerge": false
+    },
+    {
+      "description": "1Password CLI publishes via agilebits, not GitHub; pull the version out of the download links",
+      "matchDatasources": ["custom.1password-cli"],
+      "extractVersion": "op2/pkg/(?<version>v[^/]+)/op_linux_amd64_",
+      "versioning": "semver"
     }
   ],
   "customManagers": [
