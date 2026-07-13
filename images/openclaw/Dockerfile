@@ -1,5 +1,5 @@
 # renovate: datasource=docker depName=ghcr.io/openclaw/openclaw
-ARG OPENCLAW_VERSION=2026.6.11
+ARG OPENCLAW_VERSION=2026.7.1
 
 FROM ghcr.io/openclaw/openclaw:${OPENCLAW_VERSION}
 
