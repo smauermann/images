@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=actions/runner
-ARG RUNNER_VERSION=2.338.0
+ARG RUNNER_VERSION=2.338.1
 # renovate: datasource=github-releases depName=argoproj/argo-cd
 ARG ARGOCD_VERSION=v3.5.6
 
