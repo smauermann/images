@@ -1,7 +1,7 @@
 # renovate: datasource=github-releases depName=actions/runner
 ARG RUNNER_VERSION=2.338.2
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-ARG ARGOCD_VERSION=v3.6.0
+ARG ARGOCD_VERSION=v3.6.1
 
 FROM --platform=amd64 ghcr.io/actions/actions-runner:${RUNNER_VERSION}
 
